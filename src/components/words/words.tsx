@@ -1,25 +1,35 @@
 import React from 'react';
+import { useDrop } from 'react-dnd';
+
+import Word from '../word';
 
 import './words.scss';
 
 interface WordsProps {
-  words: string[];
+  words: any[];
+  markUncheck: Function;
 }
 
-const Words = (props: WordsProps) => {
-  let id = 0;
+const Words = ({ words, markUncheck }: WordsProps) => {
+  //let id = 0;
 
-  const items = props.words.map((el) => {
-    id++;
-
-    return (
-      <div className="words__item" key={id}>
-        {el}
-      </div>
-    );
+  const [collectedProps, drop] = useDrop({
+    accept: 'word',
+    //drop: (item: any) => props.setDraggedItems([...props.draggedItems, item]),
+    drop: (item: any) => markUncheck(item.id),
   });
 
-  return <div className="words">{items}</div>;
+  const items = words.map((el) => {
+    //id++;
+
+    return <Word key={el.id} id={el.id} word={el.content} />;
+  });
+
+  return (
+    <div ref={drop} className="words">
+      {items}
+    </div>
+  );
 };
 
 export default Words;
