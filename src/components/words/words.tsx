@@ -15,7 +15,6 @@ const Words = ({ words, markUncheck }: WordsProps) => {
 
   const [collectedProps, drop] = useDrop({
     accept: 'word',
-    //drop: (item: any) => props.setDraggedItems([...props.draggedItems, item]),
     drop: (item: any) => markUncheck(item.id),
   });
 
