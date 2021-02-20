@@ -4,37 +4,55 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Words from '../words';
 import CheckBox from '../check-box';
-import { saySentence } from '../../helper-functions';
+import { saySentence } from '../../utils';
+import { WordItem } from '../../types';
 
 import './app.scss';
 
+let sortTimer: any;
+
+export const clearsortTimerTimeout = () => {
+  clearTimeout(sortTimer);
+};
+
 const App = () => {
-  const [words, setWords] = useState([
-    { id: 1, content: 'pizza', status: 'uncheck' },
-    { id: 2, content: 'ordered', status: 'uncheck' },
-    { id: 3, content: 'restaurant', status: 'uncheck' },
-    { id: 4, content: 'customers', status: 'uncheck' },
-    { id: 5, content: 'the', status: 'uncheck' },
-    { id: 6, content: 'in', status: 'uncheck' },
+  const [checkWords, setCheckWords] = useState<WordItem[]>([]);
+
+  const [uncheckWords, setUncheckWords] = useState<WordItem[]>([
+    { id: 1, content: 'ordered' },
+    { id: 2, content: 'in' },
+    { id: 3, content: 'pizza' },
+    { id: 4, content: 'the' },
+    { id: 5, content: 'visitors' },
+    { id: 6, content: 'cafe' },
   ]);
+
   const [message, setMessage] = useState('');
 
   const writeSentenceArr = [
-    'customers',
+    'visitors',
     'in',
     'the',
-    'restaurant',
+    'cafe',
     'ordered',
     'pizza',
   ];
 
-  const sentence = 'Посетители в ресторане заказали пиццу';
+  const sentence = 'Посетители в кафе заказали пиццу';
 
-  const checkWords = words.filter((el) => el.status === 'check');
+  const sortWords = (word: WordItem) => {
+    sortTimer = setTimeout(() => {
+      if (uncheckWords.some((el: WordItem) => el.id === word.id)) {
+        setUncheckWords([...uncheckWords].sort((a, b) => a.id - b.id));
+      } else {
+        setUncheckWords([...uncheckWords, word].sort((a, b) => a.id - b.id));
+      }
+    }, 500);
+  };
 
-  const writeCheck = (items: any) => {
+  const writeCheck = (items: WordItem[]) => {
     const isWrite = items.every(
-      (el: any, i: number) => el.content === writeSentenceArr[i]
+      (el: WordItem, i: number) => el.content === writeSentenceArr[i]
     );
 
     if (isWrite && checkWords.length === writeSentenceArr.length) {
@@ -44,33 +62,29 @@ const App = () => {
     } else {
       setMessage('Неправильно!');
     }
-
-    // isWrite && checkWords.length === writeSentenceArr.length
-    //   ? setMessage('Правильно!')
-    //   : setMessage('Неправильно!');
   };
 
-  //console.log(writeCheck(words.filter((el) => el.status === 'check')));
+  const setCheck = (id: number) => {
+    let word = uncheckWords.find((el) => el.id === id);
 
-  const markCheck = (id: number) => {
-    const word = words.find((el) => el.id === id);
+    if (!word) {
+      word = checkWords.find((el) => el.id === id);
+    }
 
-    word!.status = 'check';
-
-    setWords(words.filter((el) => el.id !== id).concat(word!));
+    setCheckWords([...checkWords.filter((el) => el.id !== id), word!]);
+    setUncheckWords(uncheckWords.filter((el) => el.id !== id));
   };
 
-  const markUncheck = (id: number) => {
-    const word = words.find((el) => el.id === id);
+  const setUncheck = (id: number) => {
+    let word = checkWords.find((el) => el.id === id);
 
-    word!.status = 'uncheck';
+    if (!word) {
+      word = uncheckWords.find((el) => el.id === id);
+    }
 
-    setWords(words.filter((el) => el.id !== id).concat(word!));
+    setUncheckWords([...uncheckWords.filter((el) => el.id !== id), word!]);
+    setCheckWords(checkWords.filter((el) => el.id !== id));
   };
-
-  //const words = ['pizza', 'ordered', 'restaurant', 'customers', 'the', 'in'];
-
-  //setDraggedItems(['1', 2, 3, 4, 5]);
 
   return (
     <div className="app">
@@ -81,14 +95,12 @@ const App = () => {
       </div>
 
       <DndProvider backend={HTML5Backend}>
-        <CheckBox
-          words={words.filter((el) => el.status === 'check')}
-          markCheck={markCheck}
-        />
+        <CheckBox words={checkWords} setCheck={setCheck} />
 
         <Words
-          words={words.filter((el) => el.status === 'uncheck')}
-          markUncheck={markUncheck}
+          words={uncheckWords}
+          setUncheck={setUncheck}
+          sortWords={sortWords}
         />
       </DndProvider>
 
@@ -103,9 +115,9 @@ const App = () => {
 
       <button
         className="app__check-button"
-        onClick={() => writeCheck(words.filter((el) => el.status === 'check'))}
+        onClick={() => writeCheck(checkWords)}
       >
-        Check
+        Проверить
       </button>
     </div>
   );

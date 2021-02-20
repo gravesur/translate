@@ -1,32 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDrop } from 'react-dnd';
+import { wrapGrid } from 'animate-css-grid';
 
 import Word from '../word';
+import { WordItem } from '../../types';
+import { clearsortTimerTimeout } from '../app/app';
 
 import './words.scss';
 
 interface WordsProps {
-  words: any[];
-  markUncheck: Function;
+  words: WordItem[];
+  sortWords: Function;
+  setUncheck: Function;
 }
 
-const Words = ({ words, markUncheck }: WordsProps) => {
-  //let id = 0;
+const Words = (props: WordsProps) => {
+  const ref = useRef(null);
 
-  const [collectedProps, drop] = useDrop({
+  useEffect(() => {
+    wrapGrid(ref.current!, {
+      easing: 'easeInOut',
+      stagger: 0,
+      duration: 300,
+    });
+  }, []);
+
+  const [, drop] = useDrop({
     accept: 'word',
-    drop: (item: any) => markUncheck(item.id),
+    drop: (item: any) => {
+      clearsortTimerTimeout();
+
+      if (props.words.length < 6) {
+        props.setUncheck(item.id);
+
+        props.sortWords(item);
+      }
+    },
   });
 
-  const items = words.map((el) => {
-    //id++;
+  let items;
 
+  items = props.words.map((el: WordItem) => {
     return <Word key={el.id} id={el.id} word={el.content} />;
   });
 
   return (
-    <div ref={drop} className="words">
-      {items}
+    <div ref={drop}>
+      <div ref={ref} className="words">
+        {items}
+      </div>
     </div>
   );
 };

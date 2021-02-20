@@ -9,7 +9,7 @@ interface WordProps {
 }
 
 const Word = ({ word, id }: WordProps) => {
-  const [collectedProps, drag] = useDrag({
+  const [, drag] = useDrag({
     item: {
       type: 'word',
       id,

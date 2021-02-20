@@ -1,7 +1,3 @@
-// export const markCheck = (id: any) => {
-//   console.log(id);
-// };
-
 const saySentence = (m: string) => {
   const msg = new SpeechSynthesisUtterance(m);
 
