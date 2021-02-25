@@ -1,6 +1,6 @@
 .check-box {
   display: grid;
-  grid-template-rows: 5rem 5rem 5rem;
+  grid-template-rows: 5rem 5rem;
   grid-template-columns: repeat(auto-fill, 12rem);
   grid-auto-rows: 5rem;
   grid-row-gap: 1rem;
@@ -10,23 +10,16 @@
   justify-content: center;
 
   position: relative;
+  background-color: white;
   border-top: gray 1px solid;
   border-bottom: gray 1px solid;
   margin: 3rem auto;
-  height: 12rem;
+  padding: 1rem;
   max-width: 40rem;
-
-  @media (max-width: 27.5em) {
-    height: 18rem;
-  }
-
-  @media (max-width: 20.5em) {
-    height: 35rem;
-  }
 
   .line {
     position: absolute;
-    top: 6rem;
+    top: 6.5rem;
     width: 40rem;
     border-bottom: gray 1px solid;
 

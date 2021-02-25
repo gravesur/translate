@@ -3,10 +3,15 @@
   font-size: 1.6rem;
   max-width: 80rem;
   min-height: 90rem;
+  background-color: rgba(224, 224, 224, 0.2);
   margin: 3rem auto;
   text-align: center;
   padding: 5rem 3rem;
   border-radius: 0.5rem;
+
+  @media (max-width: 53em) {
+    margin: 3rem 3rem;
+  }
 
   &__header {
     margin: 0 auto;
@@ -14,6 +19,10 @@
 
     @media (max-width: 37em) {
       font-size: 2.6rem;
+    }
+
+    @media (max-width: 19em) {
+      font-size: 2.4rem;
     }
   }
 
@@ -32,10 +41,18 @@
 
   &__paragraph {
     font-size: 2.6rem;
+
+    @media (max-width: 19em) {
+      font-size: 2.2rem;
+    }
   }
 
   &__message {
     margin: 5rem 0;
+
+    @media (max-width: 19em) {
+      font-size: 2.2rem;
+    }
   }
 
   &__check-button {
@@ -49,6 +66,7 @@
     display: block;
     width: 12rem;
     height: 4rem;
+    box-shadow: gray 0 1px 3px;
 
     &:active {
       background-color: grey;
