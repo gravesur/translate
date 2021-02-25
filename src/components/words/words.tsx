@@ -38,8 +38,8 @@ const Words = (props: WordsProps) => {
     },
   });
 
-  const items = props.words.map((el: WordItem) => {
-    return <Word key={el.id} id={el.id} word={el.content} />;
+  const items = props.words.map(({ id, content }: WordItem) => {
+    return <Word key={id} id={id} word={content} />;
   });
 
   return (

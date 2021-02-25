@@ -24,8 +24,8 @@ const CheckBox = (props: CheckBoxProps) => {
   return (
     <div ref={drop} className="check-box">
       <div className="line"></div>
-      {props.words.map((el: WordItem) => {
-        return <Word key={el.id} id={el.id} word={el.content} />;
+      {props.words.map(({ id, content }: WordItem) => {
+        return <Word key={id} id={id} word={content} />;
       })}
     </div>
   );

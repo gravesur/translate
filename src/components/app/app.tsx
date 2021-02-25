@@ -18,7 +18,6 @@ export const clearsortTimerTimeout = () => {
 
 const App = () => {
   const [checkWords, setCheckWords] = useState<WordItem[]>([]);
-
   const [uncheckWords, setUncheckWords] = useState<WordItem[]>([
     { id: 1, content: 'ordered' },
     { id: 2, content: 'in' },
@@ -27,8 +26,8 @@ const App = () => {
     { id: 5, content: 'visitors' },
     { id: 6, content: 'cafe' },
   ]);
-
-  const [message, setMessage] = useState('');
+  const [isWrite, setIsWrite] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const writeSentenceArr = [
     'visitors',
@@ -52,16 +51,18 @@ const App = () => {
   };
 
   const writeCheck = (items: WordItem[]) => {
+    setShowMessage(true);
+
     const isWrite = items.every(
       (el: WordItem, i: number) => el.content === writeSentenceArr[i]
     );
 
     if (isWrite && checkWords.length === writeSentenceArr.length) {
-      setMessage('Правильно!');
+      setIsWrite(true);
 
       saySentence(writeSentenceArr.join(' '));
     } else {
-      setMessage('Неправильно!');
+      setIsWrite(false);
     }
   };
 
@@ -111,7 +112,7 @@ const App = () => {
         />
       </DndProvider>
 
-      <Message message={message} />
+      <Message isWrite={isWrite} showMessage={showMessage} />
 
       <button
         className="app__check-button"

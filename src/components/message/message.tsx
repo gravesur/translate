@@ -3,20 +3,19 @@ import React from 'react';
 import './message.scss';
 
 interface MessageProps {
-  message: string;
+  isWrite: boolean;
+  showMessage: boolean;
 }
 
-const Message = ({ message }: MessageProps) => {
-  return (
-    <h2
-      className="message"
-      style={
-        message === 'Правильно!' ? { color: 'forestgreen' } : { color: 'red' }
-      }
-    >
-      {message}
-    </h2>
-  );
+const Message = ({ isWrite, showMessage }: MessageProps) => {
+  if (!showMessage) return null;
+
+  let classes = 'message';
+
+  if (isWrite) classes += ' message--write';
+  else classes += ' message--false';
+
+  return <h2 className={classes}>{isWrite ? 'Правильно!' : 'Неправильно!'}</h2>;
 };
 
 export default Message;
