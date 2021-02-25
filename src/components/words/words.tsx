@@ -38,9 +38,7 @@ const Words = (props: WordsProps) => {
     },
   });
 
-  let items;
-
-  items = props.words.map((el: WordItem) => {
+  const items = props.words.map((el: WordItem) => {
     return <Word key={el.id} id={el.id} word={el.content} />;
   });
 

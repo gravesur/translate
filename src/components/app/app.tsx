@@ -4,6 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Words from '../words';
 import CheckBox from '../check-box';
+import Message from '../message';
 import { saySentence } from '../../utils';
 import { WordItem } from '../../types';
 
@@ -65,25 +66,31 @@ const App = () => {
   };
 
   const setCheck = (id: number) => {
-    let word = uncheckWords.find((el) => el.id === id);
+    let word = uncheckWords.find((el: WordItem) => el.id === id);
 
     if (!word) {
-      word = checkWords.find((el) => el.id === id);
+      word = checkWords.find((el: WordItem) => el.id === id);
     }
 
-    setCheckWords([...checkWords.filter((el) => el.id !== id), word!]);
-    setUncheckWords(uncheckWords.filter((el) => el.id !== id));
+    setCheckWords([
+      ...checkWords.filter((el: WordItem) => el.id !== id),
+      word!,
+    ]);
+    setUncheckWords(uncheckWords.filter((el: WordItem) => el.id !== id));
   };
 
   const setUncheck = (id: number) => {
-    let word = checkWords.find((el) => el.id === id);
+    let word = checkWords.find((el: WordItem) => el.id === id);
 
     if (!word) {
-      word = uncheckWords.find((el) => el.id === id);
+      word = uncheckWords.find((el: WordItem) => el.id === id);
     }
 
-    setUncheckWords([...uncheckWords.filter((el) => el.id !== id), word!]);
-    setCheckWords(checkWords.filter((el) => el.id !== id));
+    setUncheckWords([
+      ...uncheckWords.filter((el: WordItem) => el.id !== id),
+      word!,
+    ]);
+    setCheckWords(checkWords.filter((el: WordItem) => el.id !== id));
   };
 
   return (
@@ -104,14 +111,7 @@ const App = () => {
         />
       </DndProvider>
 
-      <h2
-        className="app__message"
-        style={
-          message === 'Правильно!' ? { color: 'forestgreen' } : { color: 'red' }
-        }
-      >
-        {message}
-      </h2>
+      <Message message={message} />
 
       <button
         className="app__check-button"
