@@ -122,12 +122,10 @@ const App = () => {
 
       <Message isWrite={isWrite} showMessage={showMessage} />
 
-      <div className="app__button-box">
-        <CheckButton
-          onCheckButtonClicked={onCheckButtonClicked}
-          isButtonClicked={isButtonClicked}
-        />
-      </div>
+      <CheckButton
+        onCheckButtonClicked={onCheckButtonClicked}
+        isButtonClicked={isButtonClicked}
+      />
     </div>
   );
 };
