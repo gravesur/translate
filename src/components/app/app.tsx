@@ -5,6 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Words from '../words';
 import CheckBox from '../check-box';
 import Message from '../message';
+import CheckButton from '../check-button';
 import { saySentence } from '../../utils';
 import { WordItem } from '../../types';
 
@@ -28,6 +29,7 @@ const App = () => {
   ]);
   const [isWrite, setIsWrite] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const writeSentenceArr = [
     'visitors',
@@ -51,8 +53,6 @@ const App = () => {
   };
 
   const writeCheck = (items: WordItem[]) => {
-    setShowMessage(true);
-
     const isWrite = items.every(
       (el: WordItem, i: number) => el.content === writeSentenceArr[i]
     );
@@ -94,6 +94,14 @@ const App = () => {
     setCheckWords(checkWords.filter((el: WordItem) => el.id !== id));
   };
 
+  const onCheckButtonClicked = () => {
+    setIsButtonClicked(true);
+
+    setShowMessage(true);
+
+    writeCheck(checkWords);
+  };
+
   return (
     <div className="app">
       <h1 className="app__header">Переведите предложение на английский язык</h1>
@@ -114,12 +122,12 @@ const App = () => {
 
       <Message isWrite={isWrite} showMessage={showMessage} />
 
-      <button
-        className="app__check-button"
-        onClick={() => writeCheck(checkWords)}
-      >
-        Проверить
-      </button>
+      <div className="app__button-box">
+        <CheckButton
+          onCheckButtonClicked={onCheckButtonClicked}
+          isButtonClicked={isButtonClicked}
+        />
+      </div>
     </div>
   );
 };

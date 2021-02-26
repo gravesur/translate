@@ -1,5 +1,13 @@
 .message {
-  margin: 5rem 0;
+  margin: 4rem 0;
+  height: 3rem;
+  opacity: 0;
+  color: rgba(224, 224, 224, 0.2);
+  transition: all 0.5s;
+
+  &--show {
+    opacity: 1;
+  }
 
   &--write {
     color: forestgreen;

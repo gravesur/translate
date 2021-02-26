@@ -8,9 +8,10 @@ interface MessageProps {
 }
 
 const Message = ({ isWrite, showMessage }: MessageProps) => {
-  if (!showMessage) return null;
-
   let classes = 'message';
+
+  if (!showMessage) return <h2 className={classes}></h2>;
+  else classes += ' message--show';
 
   if (isWrite) classes += ' message--write';
   else classes += ' message--false';

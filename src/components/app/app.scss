@@ -1,8 +1,8 @@
 .app {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.6rem;
-  max-width: 80rem;
-  min-height: 90rem;
+  max-width: 70rem;
+  min-height: 80rem;
   background-color: rgba(224, 224, 224, 0.2);
   margin: 3rem auto;
   text-align: center;
@@ -47,29 +47,8 @@
     }
   }
 
-  &__check-button {
-    cursor: pointer;
-    outline: none;
-    margin: 5rem auto 3rem auto;
-    background-color: white;
-    font-size: 1.8rem;
-    border: gray 1px solid;
-    border-radius: 5px;
-    display: block;
-    width: 12rem;
-    height: 4rem;
-    box-shadow: gray 0 1px 3px;
-
-    &:active {
-      background-color: grey;
-    }
-
-    @media (max-width: 32.5em) {
-      margin: 7rem auto 3rem auto;
-    }
-
-    @media (max-width: 18em) {
-      margin: 5rem auto 3rem auto;
-    }
+  &__button-box {
+    position: relative;
+    height: 8rem;
   }
 }

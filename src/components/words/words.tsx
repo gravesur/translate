@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDrop } from 'react-dnd';
 import { wrapGrid } from 'animate-css-grid';
 
